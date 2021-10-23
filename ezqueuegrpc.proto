@@ -1,0 +1,41 @@
+syntax="proto3";
+
+option go_package = "./ezqueuegrpc";
+
+service Ezqueued {
+    rpc Create(CreateParams) returns (ReturnStatus);
+    rpc Enqueue(EnqueueParams) returns (ReturnStatus);
+    rpc Dequeue(DequeueParams) returns (QueueItem);
+    rpc Peek(PeekParams) returns (QueueItem);
+}
+
+message CreateParams {
+    string AppName = 1;
+    string QueueName = 2;
+    uint32 DelaySeconds = 3;
+    uint32 VisibilityTimeout = 4;
+}
+
+message EnqueueParams {
+    string AppName = 1;
+    string QueueName = 2;
+    string Message = 3;
+}
+
+message PeekParams {
+    string AppName = 1;
+    string QueueName = 2;
+}
+
+message DequeueParams {
+    string AppName = 1;
+    string QueueName = 2;
+}
+
+message QueueItem {
+    string Message = 1;
+}
+
+message ReturnStatus {
+    int32 Success = 1;
+}
